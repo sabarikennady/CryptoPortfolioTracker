@@ -1,26 +1,21 @@
 # CryptoPortfolioTracker
 
-CryptoPortfolioTracker is a React Native application that provides users with the ability to track cryptocurrency prices, view detailed charts, and manage their crypto portfolio. The app features a home screen for browsing cryptocurrencies, an options screen for detailed chart viewing, and a profile screen with user details.
+CryptoPortfolioTracker is a React Native application that allows users to track cryptocurrency prices, view detailed charts, manage their crypto portfolio, and view rewards earned through app usage.
 
 ## Features
 
 - **Home Screen**: Browse and search for cryptocurrencies, view their current prices and 24-hour changes.
 - **Options Screen**: View detailed charts for selected cryptocurrencies over various time periods.
-- **Profile Screen**: View user profile information (dummy data for now).
+- **Profile Screen**: View user profile information.
+- **Rewards Screen**: Placeholder for displaying rewards earned through app usage.
 
-## Screenshots / GIFs
-
-- Home Screen:
+## Screenshots
   
-  ![Home Screen](placeholder-for-gif-home-screen.gif)
+  ![Home Screen](assets/tracker.png)
 
-- Options Screen:
-  
-  ![Options Screen](placeholder-for-gif-options-screen.gif)
+## Demo
+  <img src="assets/recording.gif" alt="Demo" style="width: 30%;">
 
-- Profile Screen:
-  
-  ![Profile Screen](placeholder-for-gif-profile-screen.gif)
 
 ## Installation
 
@@ -29,7 +24,7 @@ To get started with the project, follow these steps:
 1. **Clone the repository**:
 
     ```sh
-    git clone https://github.com/your-username/CryptoPortfolioTracker.git
+    git clone https://github.com/sabarikennady/CryptoPortfolioTracker.git
     cd CryptoPortfolioTracker
     ```
 
@@ -39,7 +34,14 @@ To get started with the project, follow these steps:
     yarn install
     ```
 
-3. **Start the project**:
+3. **Set up environment variables**:
+
+    Create a `.env` file in the root directory with the following variables:
+    ```
+    API_BASE_URL=your_api_base_url
+    ```
+
+4. **Start the project**:
 
     - For Android:
 
@@ -55,10 +57,16 @@ To get started with the project, follow these steps:
       yarn ios
       ```
 
-4. **Run the emulator**:
+5. **Run tests**:
 
     ```sh
-    yarn emu
+    yarn test
+    ```
+
+6. **Lint the project**:
+
+    ```sh
+    yarn lint
     ```
 
 ## Project Structure
@@ -66,6 +74,7 @@ To get started with the project, follow these steps:
 - **HomeScreen**: Allows users to search and browse through a list of cryptocurrencies, view current prices, and open detailed charts.
 - **OptionsScreen**: Displays detailed charts for selected cryptocurrencies over different time periods. It dynamically updates based on the cryptocurrency selected from the HomeScreen.
 - **ProfileScreen**: Shows dummy user profile data.
+- **RewardsScreen**: Placeholder for displaying rewards earned through app usage.
 
 ## Navigation
 
@@ -74,20 +83,7 @@ The app uses a bottom tab navigator for navigation between the screens. The tabs
 - **Home**
 - **Options**
 - **Profile**
-
-## Code Overview
-
-### HomeScreen
-
-The `HomeScreen` component fetches and displays a list of cryptocurrencies with current prices and price changes over the last 24 hours. It includes a search functionality to filter the cryptocurrencies.
-
-### OptionsScreen
-
-The `OptionsScreen` component displays a line or bar chart for the selected cryptocurrency. The chart can be toggled between line and bar chart, and the time period for the data can be changed. It fetches data dynamically based on the cryptocurrency selected from the HomeScreen.
-
-### ProfileScreen
-
-The `ProfileScreen` component displays dummy user data. This can be extended to include real user profile information in the future.
+- **Rewards**
 
 ## Dependencies
 
@@ -97,24 +93,6 @@ The project relies on the following key dependencies:
 - `react-navigation`: For navigating between screens.
 - `react-native-svg-charts`: For rendering charts.
 - `react-native-vector-icons`: For using vector icons in the app.
-
-## Development
-
-### Running Tests
-
-To run tests, use the following command:
-
-```sh
-yarn test
-```
-
-### Linting
-
-To lint the project, use the following command:
-
-```sh
-yarn lint
-```
 
 ## Contributing
 
@@ -128,4 +106,3 @@ If you would like to contribute to this project, please follow these steps:
 ## License
 
 This project is licensed under the MIT License.
-```
