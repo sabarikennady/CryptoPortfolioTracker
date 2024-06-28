@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import axios from 'axios';
 import {LineChart, BarChart, Grid, XAxis, YAxis} from 'react-native-svg-charts';
 import * as shape from 'd3-shape';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {fetchCryptoMarketChart} from '../services/apiService';
+import {Colors} from '../constants/Colors';
 
 const OptionsScreen = ({route}) => {
   const [cryptoData, setCryptoData] = useState([]);
@@ -19,15 +19,7 @@ const OptionsScreen = ({route}) => {
   const [selectedChartType, setSelectedChartType] = useState('line');
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const {selectedCrypto} = route.params || {};
-    if (selectedCrypto) {
-      setSelectedCrypto(selectedCrypto);
-    }
-    fetchCryptoData();
-  }, [selectedCrypto, selectedDays, route.params]);
-
-  const fetchCryptoData = async () => {
+  const fetchCryptoData = useCallback(async () => {
     try {
       setLoading(true);
       const params = {vs_currency: 'usd', days: selectedDays.toString()};
@@ -38,7 +30,15 @@ const OptionsScreen = ({route}) => {
       console.error(error);
       setLoading(false);
     }
-  };
+  }, [selectedCrypto, selectedDays]);
+
+  useEffect(() => {
+    const {selectedCrypto} = route.params || {};
+    if (selectedCrypto) {
+      setSelectedCrypto(selectedCrypto);
+    }
+    fetchCryptoData();
+  }, [fetchCryptoData, route.params]);
 
   const getXAxisLabels = () => {
     switch (selectedDays) {
@@ -62,11 +62,9 @@ const OptionsScreen = ({route}) => {
   const renderTopButtons = () => {
     return (
       <View style={styles.topButtonsContainer}>
-        <TouchableOpacity
-          style={[styles.topButton, styles.selectedButton]}
-          onPress={() => setSelectedCrypto('bitcoin')}>
-          <Text style={styles.buttonText}>{selectedCrypto}</Text>
-        </TouchableOpacity>
+        <Text style={styles.buttonText}>
+          {selectedCrypto.toLocaleUpperCase()}
+        </Text>
         <TouchableOpacity
           style={[
             styles.iconButton,
@@ -76,7 +74,7 @@ const OptionsScreen = ({route}) => {
           <Icon
             name={selectedChartType === 'bar' ? 'bar-chart' : 'line-chart'}
             size={24}
-            color="#fff"
+            color={Colors.primaryTextColor}
           />
         </TouchableOpacity>
       </View>
@@ -116,7 +114,7 @@ const OptionsScreen = ({route}) => {
       {renderTopButtons()}
       {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#fff" />
+          <ActivityIndicator size="large" color={Colors.blue} />
         </View>
       ) : (
         <View style={{flex: 1}}>
@@ -124,7 +122,7 @@ const OptionsScreen = ({route}) => {
             <LineChart
               style={{flex: 1}}
               data={cryptoData}
-              svg={{stroke: 'green'}}
+              svg={{stroke: Colors.green}}
               contentInset={{top: 20, bottom: 20}}
               curve={shape.curveNatural}
               animate={true}
@@ -135,7 +133,7 @@ const OptionsScreen = ({route}) => {
             <BarChart
               style={{flex: 1}}
               data={cryptoData}
-              svg={{fill: 'rgba(134, 65, 244, 0.8)'}}
+              svg={{fill: Colors.green}}
               contentInset={{top: 20, bottom: 20}}>
               <Grid />
             </BarChart>
@@ -148,8 +146,7 @@ const OptionsScreen = ({route}) => {
               position: 'absolute',
               top: 20,
               bottom: 20,
-              left: 0,
-              marginLeft: 3,
+              right: 0,
             }}
           />
           <View style={{height: 20}}>
@@ -170,48 +167,47 @@ const OptionsScreen = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#424242',
+    backgroundColor: Colors.primaryColor,
+    padding: 6,
   },
   header: {
-    fontSize: 24,
-    color: '#fff',
-    textAlign: 'center',
-    marginBottom: 16,
+    fontSize: 20,
+    color: Colors.primaryTextColor,
+    textAlign: 'left',
+    marginVertical: 10,
   },
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 16,
-    paddingHorizontal: 16,
   },
   topButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 16,
-    paddingHorizontal: 16,
   },
   topButton: {
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
-    backgroundColor: '#4CAF50',
+    backgroundColor: Colors.green,
   },
   button: {
     paddingHorizontal: 16,
     borderRadius: 8,
-    backgroundColor: '#4CAF50',
+    backgroundColor: Colors.avatar,
   },
   iconButton: {
     padding: 10,
     borderRadius: 8,
-    backgroundColor: '#4CAF50',
+    backgroundColor: Colors.green,
   },
   selectedButton: {
-    backgroundColor: '#689F38',
+    backgroundColor: Colors.blue,
   },
   buttonText: {
     fontSize: 16,
-    color: '#fff',
+    color: Colors.primaryTextColor,
     textAlign: 'center',
   },
   loadingContainer: {

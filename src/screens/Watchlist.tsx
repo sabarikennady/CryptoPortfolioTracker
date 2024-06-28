@@ -11,8 +11,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {fetchCryptoMarkets} from '../services/apiService';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {Colors} from '../constants/Colors';
 
-const HomeScreen = ({navigation}) => {
+const Watchlist = ({navigation}) => {
   const [cryptoData, setCryptoData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCrypto, setSelectedCrypto] = useState(null);
@@ -43,11 +45,11 @@ const HomeScreen = ({navigation}) => {
 
   const getPriceChangeColor = change => {
     if (change > 0) {
-      return '#4CAF50';
+      return Colors.green;
     } else if (change < 0) {
-      return '#FF5733';
+      return Colors.red;
     } else {
-      return '#fff';
+      return Colors.primaryTextColor;
     }
   };
 
@@ -62,20 +64,29 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Crypto Dashboard</Text>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search cryptocurrencies..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-        returnKeyLabel="Search"
-      />
+      <Text style={styles.header}>Watchlist</Text>
+      <View style={styles.searchContainer}>
+        <Icon
+          name="search"
+          size={20}
+          color={Colors.primaryTextColor}
+          style={styles.searchIcon}
+        />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search & add"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          returnKeyLabel="Search"
+          placeholderTextColor={Colors.primaryTextColor}
+        />
+      </View>
       {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#fff" />
+          <ActivityIndicator size="large" color={Colors.secondaryTextColor} />
         </View>
       ) : (
-        <ScrollView keyboardShouldPersistTaps>
+        <ScrollView keyboardShouldPersistTaps="handled">
           {filteredCryptoData.map(crypto => (
             <TouchableOpacity
               key={crypto.id}
@@ -121,30 +132,51 @@ const HomeScreen = ({navigation}) => {
                       {selectedCrypto.symbol.toUpperCase()})
                     </Text>
                     <View style={styles.modalContent}>
-                      <Text style={styles.modalText}>
-                        Current Price: $
-                        {selectedCrypto.current_price.toFixed(2)}
-                      </Text>
-                      <Text style={styles.modalText}>
-                        Market Cap: ${selectedCrypto.market_cap}
-                      </Text>
-                      <Text style={styles.modalText}>
-                        Total Volume: ${selectedCrypto.total_volume}
-                      </Text>
-                      <Text style={styles.modalText}>
-                        High (24h): ${selectedCrypto.high_24h}
-                      </Text>
-                      <Text style={styles.modalText}>
-                        Low (24h): ${selectedCrypto.low_24h}
-                      </Text>
-                      <Text style={styles.modalText}>
-                        Price Change (24h): $
-                        {selectedCrypto.price_change_24h.toFixed(2)}
-                      </Text>
-                      <Text style={styles.modalText}>
-                        Change (%) (24h):{' '}
-                        {selectedCrypto.price_change_percentage_24h.toFixed(2)}%
-                      </Text>
+                      <View style={styles.modalRow}>
+                        <Text style={styles.modalKey}>Current Price:</Text>
+                        <Text style={styles.modalValue}>
+                          ${selectedCrypto.current_price.toFixed(2)}
+                        </Text>
+                      </View>
+                      <View style={styles.modalRow}>
+                        <Text style={styles.modalKey}>Market Cap:</Text>
+                        <Text style={styles.modalValue}>
+                          ${selectedCrypto.market_cap}
+                        </Text>
+                      </View>
+                      <View style={styles.modalRow}>
+                        <Text style={styles.modalKey}>Total Volume:</Text>
+                        <Text style={styles.modalValue}>
+                          ${selectedCrypto.total_volume}
+                        </Text>
+                      </View>
+                      <View style={styles.modalRow}>
+                        <Text style={styles.modalKey}>High (24h):</Text>
+                        <Text style={styles.modalValue}>
+                          ${selectedCrypto.high_24h}
+                        </Text>
+                      </View>
+                      <View style={styles.modalRow}>
+                        <Text style={styles.modalKey}>Low (24h):</Text>
+                        <Text style={styles.modalValue}>
+                          ${selectedCrypto.low_24h}
+                        </Text>
+                      </View>
+                      <View style={styles.modalRow}>
+                        <Text style={styles.modalKey}>Price Change (24h):</Text>
+                        <Text style={styles.modalValue}>
+                          ${selectedCrypto.price_change_24h.toFixed(2)}
+                        </Text>
+                      </View>
+                      <View style={styles.modalRow}>
+                        <Text style={styles.modalKey}>Change (%) (24h):</Text>
+                        <Text style={styles.modalValue}>
+                          {selectedCrypto.price_change_percentage_24h.toFixed(
+                            2,
+                          )}
+                          %
+                        </Text>
+                      </View>
                     </View>
                     <TouchableOpacity
                       style={styles.viewChartButton}
@@ -154,7 +186,14 @@ const HomeScreen = ({navigation}) => {
                           selectedCrypto: selectedCrypto.id,
                         });
                       }}>
-                      <Text style={styles.viewChartButtonText}>View Chart</Text>
+                      <Text style={styles.viewChartButtonText}>
+                        <Icon
+                          name="line-chart"
+                          size={20}
+                          color={Colors.primaryTextColor}
+                        />{' '}
+                        View Chart{' '}
+                      </Text>
                     </TouchableOpacity>
                   </>
                 )}
@@ -170,27 +209,36 @@ const HomeScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#424242',
+    backgroundColor: Colors.primaryColor,
     padding: 6,
   },
   header: {
-    fontSize: 24,
-    color: '#fff',
-    textAlign: 'center',
-    marginBottom: 16,
+    fontSize: 20,
+    color: Colors.primaryTextColor,
+    textAlign: 'left',
+    marginVertical: 10,
   },
-  searchInput: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    backgroundColor: '#fff',
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.secondaryBackground,
+    borderRadius: 3,
+    paddingVertical: 5,
     paddingHorizontal: 10,
     marginBottom: 16,
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    color: Colors.primaryTextColor,
   },
   cryptoContainer: {
     marginBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#666',
+    borderBottomColor: Colors.disabledState,
     paddingBottom: 8,
   },
   cryptoInfo: {
@@ -199,8 +247,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   cryptoName: {
-    fontSize: 16,
-    color: '#fff',
+    fontSize: 14,
+    color: Colors.primaryTextColor,
   },
   cryptoPrice: {
     fontSize: 14,
@@ -212,11 +260,11 @@ const styles = StyleSheet.create({
   },
   priceChangeLabel: {
     fontSize: 12,
-    color: '#ccc',
+    color: Colors.secondaryTextColor,
   },
   priceChangeValue: {
     fontSize: 14,
-    color: '#ccc',
+    color: Colors.secondaryTextColor,
   },
   viewChartButton: {
     alignSelf: 'center',
@@ -224,12 +272,15 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,
-    backgroundColor: '#4CAF50',
+    backgroundColor: Colors.blue,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   viewChartButtonText: {
     fontSize: 16,
-    color: '#fff',
+    color: Colors.primaryTextColor,
     textAlign: 'center',
+    marginRight: 8,
   },
   modalBackground: {
     flex: 1,
@@ -238,7 +289,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContainer: {
-    backgroundColor: '#424242',
+    backgroundColor: Colors.primaryColor,
     padding: 20,
     borderRadius: 8,
     width: '80%',
@@ -246,23 +297,29 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     fontSize: 20,
-    color: '#fff',
+    color: Colors.primaryTextColor,
     textAlign: 'center',
     marginBottom: 16,
   },
   modalContent: {
     marginBottom: 16,
   },
-  modalText: {
-    fontSize: 16,
-    color: '#fff',
+  modalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 8,
   },
-  loadingText: {
-    fontSize: 18,
-    color: '#fff',
-    textAlign: 'center',
-    marginTop: 20,
+  modalKey: {
+    fontSize: 14,
+    color: Colors.primaryTextColor,
+    width: '45%',
+    textAlign: 'left',
+  },
+  modalValue: {
+    fontSize: 14,
+    color: Colors.primaryTextColor,
+    width: '55%',
+    textAlign: 'right',
   },
   loadingContainer: {
     flex: 1,
@@ -271,4 +328,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default Watchlist;
