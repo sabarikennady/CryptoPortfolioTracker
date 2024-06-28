@@ -1,6 +1,6 @@
 # CryptoPortfolioTracker
 
-CryptoPortfolioTracker is a React Native application that allows users to track cryptocurrency prices, view detailed charts, manage their crypto portfolio, and view rewards earned through app usage.
+CryptoPortfolioTracker is a React Native application that allows users to track cryptocurrency prices, view detailed charts, manage their crypto portfolio, and view rewards earned through app usage. (Inspired from Kite-Zerodha)
 
 ## Features
 
