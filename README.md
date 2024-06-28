@@ -14,7 +14,7 @@ CryptoPortfolioTracker is a React Native application that allows users to track 
   ![Home Screen](assets/tracker.png)
 
 ## Demo
-  <img src="assets/recording.gif" alt="Demo" style="width: 30%;">
+  <img src="assets/recording.gif" alt="Demo" style="width: 50%;">
 
 
 ## Installation
