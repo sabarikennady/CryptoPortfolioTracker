@@ -1,79 +1,131 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# CryptoPortfolioTracker
 
-# Getting Started
+CryptoPortfolioTracker is a React Native application that provides users with the ability to track cryptocurrency prices, view detailed charts, and manage their crypto portfolio. The app features a home screen for browsing cryptocurrencies, an options screen for detailed chart viewing, and a profile screen with user details.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Features
 
-## Step 1: Start the Metro Server
+- **Home Screen**: Browse and search for cryptocurrencies, view their current prices and 24-hour changes.
+- **Options Screen**: View detailed charts for selected cryptocurrencies over various time periods.
+- **Profile Screen**: View user profile information (dummy data for now).
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Screenshots / GIFs
 
-To start Metro, run the following command from the _root_ of your React Native project:
+- Home Screen:
+  
+  ![Home Screen](placeholder-for-gif-home-screen.gif)
 
-```bash
-# using npm
-npm start
+- Options Screen:
+  
+  ![Options Screen](placeholder-for-gif-options-screen.gif)
 
-# OR using Yarn
-yarn start
+- Profile Screen:
+  
+  ![Profile Screen](placeholder-for-gif-profile-screen.gif)
+
+## Installation
+
+To get started with the project, follow these steps:
+
+1. **Clone the repository**:
+
+    ```sh
+    git clone https://github.com/your-username/CryptoPortfolioTracker.git
+    cd CryptoPortfolioTracker
+    ```
+
+2. **Install dependencies**:
+
+    ```sh
+    yarn install
+    ```
+
+3. **Start the project**:
+
+    - For Android:
+
+      ```sh
+      yarn start
+      yarn android
+      ```
+
+    - For iOS:
+
+      ```sh
+      yarn start
+      yarn ios
+      ```
+
+4. **Run the emulator**:
+
+    ```sh
+    yarn emu
+    ```
+
+## Project Structure
+
+- **HomeScreen**: Allows users to search and browse through a list of cryptocurrencies, view current prices, and open detailed charts.
+- **OptionsScreen**: Displays detailed charts for selected cryptocurrencies over different time periods. It dynamically updates based on the cryptocurrency selected from the HomeScreen.
+- **ProfileScreen**: Shows dummy user profile data.
+
+## Navigation
+
+The app uses a bottom tab navigator for navigation between the screens. The tabs include:
+
+- **Home**
+- **Options**
+- **Profile**
+
+## Code Overview
+
+### HomeScreen
+
+The `HomeScreen` component fetches and displays a list of cryptocurrencies with current prices and price changes over the last 24 hours. It includes a search functionality to filter the cryptocurrencies.
+
+### OptionsScreen
+
+The `OptionsScreen` component displays a line or bar chart for the selected cryptocurrency. The chart can be toggled between line and bar chart, and the time period for the data can be changed. It fetches data dynamically based on the cryptocurrency selected from the HomeScreen.
+
+### ProfileScreen
+
+The `ProfileScreen` component displays dummy user data. This can be extended to include real user profile information in the future.
+
+## Dependencies
+
+The project relies on the following key dependencies:
+
+- `axios`: For making HTTP requests to fetch cryptocurrency data.
+- `react-navigation`: For navigating between screens.
+- `react-native-svg-charts`: For rendering charts.
+- `react-native-vector-icons`: For using vector icons in the app.
+
+## Development
+
+### Running Tests
+
+To run tests, use the following command:
+
+```sh
+yarn test
 ```
 
-## Step 2: Start your Application
+### Linting
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+To lint the project, use the following command:
 
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```sh
+yarn lint
 ```
 
-### For iOS
+## Contributing
 
-```bash
-# using npm
-npm run ios
+If you would like to contribute to this project, please follow these steps:
 
-# OR using Yarn
-yarn ios
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes.
+4. Submit a pull request.
+
+## License
+
+This project is licensed under the MIT License.
 ```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
